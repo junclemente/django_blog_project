@@ -66,13 +66,26 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y python3
+  #   apt-get install -y python3-pip
+  #   apt-get install -y git
+  #   pip3 install django==1.11
+  # SHELL
+
+  config.vm.provision "shell", path: "setupscript.sh"
+
+  # This is an optional file that contains my personal aliases. If you want to
+  # upload your own aliases, create a file and provide the file path to the
+  # 'source' variable. It will then be copied to the .bash_aliases file and
+  # loaded by .bashrc
+  if File.file?("../my_bash_aliases")
+    config.vm.provision "file", source: "../my_bash_aliases", destination: "~/.bash_aliases"
+  end
+
   config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get install -y python3
-    apt-get install -y python3-pip
-    apt-get install -y git
-    pip3 install django==1.11
+    echo "cd ~/vagrant" >> /home/vagrant/.bashrc
   SHELL
 
-  config.vm.provision "file", source: "bash-aliases", destination: "~/.bash_aliases"
 end
