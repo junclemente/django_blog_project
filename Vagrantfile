@@ -68,10 +68,6 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   # config.vm.provision "shell", inline: <<-SHELL
   #   apt-get update
-  #   apt-get install -y python3
-  #   apt-get install -y python3-pip
-  #   apt-get install -y git
-  #   pip3 install django==1.11
   # SHELL
 
   config.vm.provision "shell", path: "setupscript.sh"
@@ -84,6 +80,8 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "../my_bash_aliases", destination: "~/.bash_aliases"
   end
 
+  # The following lines ensures when you ssh into Vagrant, you will be in the ~/vagrant
+  # directory
   config.vm.provision "shell", inline: <<-SHELL
     echo "cd ~/vagrant" >> /home/vagrant/.bashrc
   SHELL
