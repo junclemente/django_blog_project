@@ -6,7 +6,7 @@
     <h3>(Must be SuperUser, please check with the site admin)</h3>
 
     {% if form.errors %}
-        <<p>You're username and password didn't match! Please try again. </p>
+        <p>You're username and password didn't match! Please try again. </p>
     {% endif %}
 
     <form action="{% url 'login' %}" method="POST">
